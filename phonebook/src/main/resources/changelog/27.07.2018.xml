@@ -1,0 +1,51 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+	<changeSet id="0" author="w.zeller@online.de"
+		runInTransaction="true">
+
+		<!-- address -->
+		<createTable tableName="address">
+			<column autoIncrement="true" name="id" type="BIGINT">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="country" type="varchar(20)"></column>
+			<column name="city" type="varchar(36)"></column>
+			<column name="street" type="varchar(40)"></column>
+			<column name="housenumber" type="varchar(10)"></column>
+			<column name="postcode" type="varchar(10)"></column>
+			<column name="additionalinfo" type="varchar(200)"></column>
+		</createTable>
+
+		<!-- human -->
+		<createTable tableName="human">
+			<column autoIncrement="true" name="id" type="BIGINT">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="firstname" type="varchar(30)"></column>
+			<column name="secondname" type="varchar(30)"></column>
+			<column name="bday" type="timestamp"></column>
+			<column name="email" type="varchar(60)"></column>
+			<column name="address_id" type="BIGINT">
+				<constraints foreignKeyName="address_fk1"
+					referencedTableName="address" referencedColumnNames="id" />
+			</column>
+		</createTable>
+
+		<!-- phonenumber -->
+		<createTable tableName="phonenumber">
+			<column autoIncrement="true" name="id" type="BIGINT">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="number" type="varchar(30)"></column>
+			<column name="humnan_id" type="BIGINT">
+				<constraints foreignKeyName="human_fk1"
+					referencedTableName="human" referencedColumnNames="id" />
+			</column>
+		</createTable>
+
+	</changeSet>
+</databaseChangeLog>
